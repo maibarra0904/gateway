@@ -8,12 +8,26 @@ spring:
                   uri: lb://products
                   predicates:
                   - Path=/api/products/**
+                  # - Header=token, \d+
+                  # - Method=GET, POST
+                  # - Query=color, verde
+                  # - Cookie=color, azul
+                  # - Header=Content-Type, application/json
                   filters:
                   - StripPrefix=2
+                  - name: SampleCookie
+                    args:
+                      name: user
+                      value: Mario
+                      message: Sample cookie added
                 - id: items
                   uri: lb://items
                   predicates:
                   - Path=/api/items/**
                   filters:
                   - StripPrefix=2
+                  - AddRequestHeader=token-request, qwertyRequest
+                  - AddResponseHeader=token-response, qwertyResponse
+                  - AddRequestParameter=name, Mario
+                  - SetResponseHeader=Content-Type, text/plain
                 
