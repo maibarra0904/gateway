@@ -26,6 +26,12 @@ spring:
     cloud:
         gateway:
             routes:
+                - id: msvc-users
+                  uri: lb://msvc-users
+                  predicates:
+                  - Path=/api/users/**
+                  filters:
+                  - StripPrefix=2
                 - id: products
                   uri: lb://products
                   predicates:
